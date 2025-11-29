@@ -5,22 +5,22 @@ colorTo: blue
 sdk: docker
 pinned: false
 app_port: 7860
-LLM Analysis – Autonomous Quiz Solver Agent
+LLM Analysis - Autonomous Quiz Solver Agent
 
 
 
 
 
 
-LLM Analysis is an intelligent, autonomous agent built with LangGraph and LangChain. It is designed to solve data-driven quizzes by orchestrating web scraping, data processing, analysis, and visualization tasks. The system utilizes Google’s Gemini 2.5 Flash model to manage tool selection and automated decision-making.
+An intelligent autonomous agent leveraging LangGraph and LangChain to solve data-centric quizzes. The system orchestrates web scraping, data processing, analysis, and visualization tasks using Google’s Gemini 2.5 Flash model to guide tool selection and decision-making.
 
 📋 Table of Contents
 
-Project Overview
+Overview
 
-System Architecture
+Architecture
 
-Key Features
+Features
 
 Project Structure
 
@@ -32,33 +32,31 @@ Usage
 
 API Endpoints
 
-Available Tools
+Tools & Capabilities
 
 Docker Deployment
 
 Operational Workflow
 
-Design Considerations
-
 License
 
-🔍 Project Overview
+🔍 Overview
 
-This system was developed for the Tools in Data Science (TDS) course project to autonomously solve multi-step quizzes involving:
+Developed as part of the Tools in Data Science (TDS) course project, this system autonomously handles multi-step quizzes that involve:
 
-Data Acquisition: Web scraping, API interactions, file downloads
+Data Acquisition: Web scraping, API requests, file downloads
 
-Data Preparation: Cleaning and structuring text, PDFs, CSVs, and other formats
+Data Preparation: Cleaning text, PDFs, CSVs, and other formats
 
-Data Analysis: Filtering, aggregation, statistical operations, and machine learning integration
+Data Analysis: Filtering, aggregation, statistical computations, ML integration
 
 Data Visualization: Generating charts, reports, and narrative summaries
 
-The agent accepts quiz URLs via a REST API, navigates through sequential pages, executes tasks using LLM reasoning combined with specialized tools, and submits results to the evaluation server.
+Quizzes are submitted via a REST API. The agent navigates through sequential pages, executes tasks using LLM reasoning and specialized tools, and submits results back to the evaluation server.
 
-🏗️ System Architecture
+🏗️ Architecture
 
-The system employs a LangGraph state machine architecture:
+The system uses a LangGraph state machine:
 
 ┌─────────────┐
 │   FastAPI   │  ← Receives POST requests with quiz URLs
@@ -67,7 +65,7 @@ The system employs a LangGraph state machine architecture:
        │
        ▼
 ┌─────────────┐
-│   Agent     │  ← LangGraph orchestrator powered by Gemini 2.5 Flash
+│   Agent     │  ← LangGraph orchestrator with Gemini 2.5 Flash
 │   (LLM)     │
 └──────┬──────┘
        │
@@ -77,79 +75,79 @@ The system employs a LangGraph state machine architecture:
 
 Core Components
 
-FastAPI Server (main.py) – Handles POST requests, validates secrets, and triggers agent execution.
+FastAPI Server (main.py): Handles POST requests, validates secrets, triggers agent execution.
 
-LangGraph Agent (agent.py) – Orchestrates tool usage and manages decision-making through a state machine.
+LangGraph Agent (agent.py): State machine coordinating tool usage and decision-making.
 
-Tools Package (tools/) – Modular tools for scraping, downloading, code execution, API requests, and dependency management.
+Tools Package (tools/): Modular tools for scraping, downloading, code execution, API requests, and dependency management.
 
-LLM – Google Gemini 2.5 Flash with a rate limit of nine requests per minute.
+LLM: Google Gemini 2.5 Flash with rate limiting (9 requests/min).
 
-✨ Key Features
+✨ Features
 
-Autonomous Multi-Step Problem Solving: Sequentially processes multiple quiz pages.
+Autonomous multi-step problem solving across quiz pages
 
-Dynamic JavaScript Rendering: Utilizes Playwright to handle client-side rendered pages.
+Dynamic JavaScript rendering via Playwright
 
-Python Code Generation & Execution: Automates data processing, analysis, and visualization tasks.
+Python code generation and execution for analysis tasks
 
-Flexible Data Handling: Supports PDFs, CSVs, images, and other formats.
+Flexible handling of PDFs, CSVs, images, and other data formats
 
-Self-Installing Dependencies: Automatically installs required Python packages.
+Self-installing Python dependencies
 
-Robust Error Handling: Retries failed tasks within defined time limits.
+Robust error handling and retries
 
-Docker-Ready Deployment: Compatible with cloud platforms including HuggingFace Spaces.
+Docker-ready for cloud deployment (e.g., HuggingFace Spaces)
 
-Rate Limiting: Ensures compliance with API quotas using exponential backoff.
+API rate-limiting with exponential backoff
 
 📁 Project Structure
 LLM-Analysis-TDS-Project-2/
-├── agent.py                     # LangGraph orchestration and state machine
-├── main.py                      # FastAPI server with /solve endpoint
-├── pyproject.toml               # Project dependencies and configuration
-├── Dockerfile                   # Container configuration with Playwright
+├── agent.py                     # LangGraph orchestration
+├── main.py                      # FastAPI server
+├── pyproject.toml               # Dependencies & configuration
+├── Dockerfile                   # Container setup with Playwright
 ├── .env                         # Environment variables (not committed)
 ├── tools/
 │   ├── __init__.py
-│   ├── web_scraper.py           # Playwright-based HTML renderer
+│   ├── web_scraper.py           # Playwright HTML renderer
 │   ├── code_generate_and_run.py # Python code executor
 │   ├── download_file.py         # File downloader
-│   ├── send_request.py          # HTTP POST request handler
+│   ├── send_request.py          # POST request handler
 │   └── add_dependencies.py      # Dynamic package installer
 └── README.md
 
 📦 Installation
 Prerequisites
 
-Python 3.12 or higher
+Python 3.12+
 
 uv package manager
- (recommended) or pip
+ or pip
 
 Git
 
-Step 1: Clone the Repository
+Step 1: Clone Repository
 git clone <your-github-link-here>
 cd LLM-Analysis-TDS-Project-2
 
 Step 2: Install Dependencies
-Option A – Using uv (Recommended)
+Option A: Using uv (Recommended)
 pip install uv
 uv sync
 uv run playwright install chromium
 uv run main.py
 
-Option B – Using pip
+Option B: Using pip
 python -m venv venv
-.\venv\Scripts\activate       # Windows
-# source venv/bin/activate    # macOS/Linux
+.\venv\Scripts\activate  # Windows
+# source venv/bin/activate  # macOS/Linux
 pip install -e .
 playwright install chromium
 python main.py
 
 
-Server will be available at http://0.0.0.0:7860.
+Server runs at http://0.0.0.0:7860.
 
 ⚙️ Configuration
 Environment Variables (.env)
@@ -157,19 +155,19 @@ EMAIL=your.email@example.com
 SECRET=your_secret_string
 GOOGLE_API_KEY=your_gemini_api_key_here
 
-Gemini API Key
+Gemini API Key Setup
 
-Navigate to Google AI Studio
+Visit Google AI Studio
 
 Generate a new API key
 
-Insert the key into your .env file
+Add it to your .env file
 
 🚀 Usage
 Local Development
-uv run main.py    # Or use python main.py
+uv run main.py   # or python main.py
 
-Test the POST Endpoint
+Test POST Request
 curl -X POST http://localhost:7860/solve \
   -H "Content-Type: application/json" \
   -d '{
@@ -188,7 +186,7 @@ Expected response:
 🌐 API Endpoints
 POST /solve
 
-Triggers the autonomous agent.
+Triggers the agent to process a quiz.
 
 Request Body:
 
@@ -202,7 +200,7 @@ Request Body:
 Responses:
 
 Status	Description
-200	Secret verified; agent started
+200	Secret verified, agent started
 400	Invalid JSON payload
 403	Invalid secret
 GET /healthz
@@ -214,75 +212,72 @@ Health monitoring endpoint:
   "uptime_seconds": 3600
 }
 
-🛠️ Available Tools
+🛠️ Tools & Capabilities
 
-Web Scraper (get_rendered_html) – Playwright-based JavaScript rendering
+Web Scraper (get_rendered_html): Playwright-based JS rendering
 
-File Downloader (download_file) – Downloads PDFs, CSVs, images, etc.
+File Downloader (download_file): Saves PDFs, CSVs, images, etc.
 
-Code Executor (run_code) – Executes Python scripts in isolation
+Code Executor (run_code): Runs Python scripts in isolation
 
-POST Request (post_request) – Submits JSON payloads to endpoints
+POST Request (post_request): Handles submission endpoints
 
-Dependency Installer (add_dependencies) – Dynamically installs required packages
+Dependency Installer (add_dependencies): Installs required packages dynamically
 
 🐳 Docker Deployment
 docker build -t llm-analysis-agent .
-docker run -p 7860:7860 \
-  -e EMAIL="your.email@example.com" \
-  -e SECRET="your_secret_string" \
-  -e GOOGLE_API_KEY="your_api_key" \
-  llm-analysis-agent
+docker run -p 7860:7860 -e EMAIL="your.email@example.com" -e SECRET="your_secret_string" -e GOOGLE_API_KEY="your_api_key" llm-analysis-agent
 
 HuggingFace Spaces Deployment
 
-Create a Docker-based Space
+Create a new Docker-based Space
 
-Push this repository
+Push repository
 
-Configure secrets (EMAIL, SECRET, GOOGLE_API_KEY)
+Add secrets (EMAIL, SECRET, GOOGLE_API_KEY)
 
-Space builds and deploys automatically
+Space auto-builds and deploys
 
 🧠 Operational Workflow
 
-FastAPI receives a POST request and validates the secret.
+FastAPI receives POST request and validates secret
 
-LangGraph agent initializes a state machine.
+LangGraph agent initializes state machine
 
-The agent iteratively:
+Agent iteratively:
 
-Analyzes the current quiz page
+Reads quiz instructions
 
-Executes tools for scraping, downloading, or code execution
+Executes tools (scraping, file download, code execution)
 
-Submits answers and verifies correctness
+Submits answers and checks correctness
 
-Process continues until no further quiz URLs are available; the agent returns "END".
+Continues until no new URL remains, then returns "END"
 
 📝 Design Considerations
 
-LangGraph Architecture – Enables flexible routing and complex decision-making
+LangGraph over sequential execution: Flexible routing and decision-making
 
-Background Processing – Prevents HTTP timeouts
+Background processing: Avoids HTTP timeouts
 
-Tool Modularity – Independent testing and debugging
+Tool modularity: Independent testing and debugging
 
-Rate Limiting – Preserves API quotas (9 requests/min for Gemini)
+Rate-limiting: Prevents API quota exhaustion
 
-Dynamic Code Execution – Supports complex data operations
+Dynamic code execution: Handles complex data tasks
 
-Playwright – Handles JavaScript-intensive pages
+Playwright: Supports JavaScript-heavy pages
 
-uv Package Manager – Ensures fast and adaptive dependency management
+uv for dependencies: Fast, adaptive package installation
 
 📄 License
 
-This project is licensed under the MIT License. See LICENSE
+MIT License. See LICENSE
  for details.
 
 Author: Hana Muhammed
 Course: Tools in Data Science (TDS)
 Institution: IIT Madras
 
-For questions or issues, please open an issue on the GitHub repository# TDS_Project_2
+For issues, please open an issue on the GitHub repository
+.
